@@ -13,12 +13,14 @@
 ;
 ; Count the number of numbers from 0 to n
 ;
+; Try (count-exp 1000000)
+;
 (define (count-to n)
   (if (= n 0)
       1
       (+ 1 (count-to (- n 1)))))
 
-(define (count-to2 n)
+(define (count-to-tail n)
   (define (count-to-aux n acc)
     (if (= n 0)
         acc
