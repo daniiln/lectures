@@ -149,9 +149,11 @@
                t)
    (alt-stream-make-pairs (stream-rest s) (stream-rest t))))
 
+(define int-pairs (stream-make-pairs (stream-integers-from 1) (stream-integers-from 1)))
+
 (define stream-prime-sum-pairs
   (stream-map make-pair-sum
-       (stream-filter prime-sum? (stream-make-pairs (stream-integers-from 1) (stream-integers-from 1)))))
+       (stream-filter prime-sum? int-pairs)))
 
 (define (stream-append s1 s2)
   (if (stream-empty? s1)
