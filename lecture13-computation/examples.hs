@@ -29,7 +29,7 @@ data Either a b = Left a
                 | Right b
 
 -- Functor instance for Either
-
+-- check lecture! 
 instance Functor (Either a) where
     fmap _ (Left x)  = Left x
     fmap f (Right x) = Right (f x)
