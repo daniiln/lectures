@@ -52,3 +52,6 @@ aSem _ = error "aSem: unimplemented"
 bSem :: Bexp -> (State -> Bool)
 bSem _ = error "bSem: unimplemented"
 
+{-
+ - data Aexp = Const Integer | Var Var
+ -           | Add Aexp Aexp | Sub Aexp     
