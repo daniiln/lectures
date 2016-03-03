@@ -14,7 +14,9 @@
 ;
 
 (define (map f lst)
-  #f)
+  (if (null? lst)
+    '() 
+    (cons (f (car lst)) (map f (cdr lst)))))
 
 ;
 ; Reduce a list of values to a single value by repeatedly application of a binary function. 
@@ -25,9 +27,21 @@
 ;
 
 (define (reduce f z xs)
-  #f)
+  (if (null? xs)
+    z
+    (f (car xs) (reduce f z (cdr xs)))))
 
 ; now try it the other way...
+;
+(define (fold-left fz xs)
+  (if (null?xs)
+    z
+    (fold-left f(f z(car xs)) (cdr xs))))
+
+(trace-define (fold-left fz xs)
+  (if (null?xs)
+    z
+    (fold-left f(f z(car xs)) (cdr xs))))
 
 ;
 ; Return a list containing only the elements of xs for which the predicate f
@@ -38,8 +52,11 @@
 ;
 
 (define (filter f xs)
-  #f)
-      
+  (cond [(null? xs) '()]
+        [(f (car xs xs)) (cons (car xs) (filter f (cdr xs)))]
+        [else (filter f (cdr xs))]))
+
+
 ;
 ; Compute the sum of a list of integers.
 ;
@@ -49,7 +66,7 @@
 ;; Write a solution in terms of reduce
 
 (define (sum xs)
-  #f)
+  (reduce + 0 xs))
 
 ;
 ; Calculate the sum of squares of a list of integers. Make the function non-recursive.
@@ -59,7 +76,7 @@
 ;
 
 (define (sum-of-squares xs)
-  #f)
+  (sum (map (lambda (x) (* x x)) xs)))
 
 ; Compute the order of an object (maximum depth)
 ;  The order of an atom is 0.
@@ -72,27 +89,29 @@
 ; How can we test for an atom?
 
 (define (order l)
-  #f)
+  if (not (pair? l))
+    0
+    (+ 1 (reduce max 0 (map order l))))
 
 ;
 ; Write a non-recursive function that takes a list and returns all the even
 ; integers in the list
 
 (define (only-even xs)
-  #f)
+  (filter even? xs?) )
 
 ; Write a function that composes two functions.
 ; That is, ((compose f g) x) should be the same as (f (g x))
 
 (define (compose f g)
-  #f)
+  (lambda (x) (f (g x))))
 
 ; Write a function that partially applies a function to a single argument.
 ; That is, ((papply f x) y) should be the same as (f x y)
 
 (define (papply f x)
-  #f)
-
+    (lambda (y) (f x y)))
+    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; State Examples
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -100,16 +119,16 @@
 (define (make-withdraw balance)
   (lambda (amount)
     (if (>= balance amount)
-        (begin (set! balance (- balance amount))
-               balance)
-        "Insufficient funds")))
+      (begin (set! balance (- balance amount))
+             balance)
+      "Insufficient funds")))
 
 (define (make-account balance)
   (define (withdraw amount)
     (if (>= balance amount)
-        (begin (set! balance (- balance amount))
-               balance)
-        "Insufficient funds"))
+      (begin (set! balance (- balance amount))
+             balance)
+      "Insufficient funds"))
   (define (deposit amount)
     (set! balance (+ balance amount))
     balance)

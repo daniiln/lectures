@@ -1,0 +1,81 @@
+(require xrepl)
+
+Better solution for scan. 
+(define (scan f z l)
+  (cons z( (if (null? l)
+                '()
+                (scan f (f z (first l)) (rest l))))))
+
+
+HOMEWORK  3 solutiojns
+Your answers to Problem 1 go here.
+
+Problem 1.1: + - 
+    It is represented as a sequence of frames. frames represented as lists of the key and value.
+
+Problem 1.2:
+    primitive-procedures 
+
+Problem 1.3: + -
+    It happens because of the system version of apply is different compared to 
+    metacircular evaluator, therefore it wont work.
+
+Problem 1.4: + 
+    It won't work because we won't be able to 
+    differentiate between list and application 
+    therefore it will take every combination as it is an application.
+    Thats why we need to eliminate all possibilities other than applications first.
+
+Problem 1.5:
+    I would do it by adding 
+    (eval-definition 'not initial-env)    to the definition of setup-environment
+
+    So the function will look like this:
+
+    (define (setup-environment)
+      (let ((initial-env
+             (extend-environment (primitive-procedure-names)
+                                 (primitive-procedure-objects)
+                                 the-empty-environment)))
+        (define-variable! 'true true initial-env)
+        (define-variable! 'false false initial-env)
+        (eval-definition '(define (not x) (if x false true)) initial-env)
+        initial-env))
+
+how to test:
+    (top-mceval 'not)
+
+
+------------------------Last part of tuesday lecture
+(define (fact-tail n)
+    (define(fact-helper acc n)
+        (if (= n 0)
+            acc
+            (fact-helper (* n acc) (- n 1))))
+        (fact-helper 1 n))
+
+(define (fib b)
+    (cond ([= n 0] 0)
+          ([= n 1] 1)
+          (else (+ fib (- n 1)) (fib (- n 2))))) 
+
+
+(define (fib-tail n)
+    (define (fib-aux a b n)
+        (if (= n 0)
+            a
+            (fib-aux b (+ a b) (-n 1))))
+    (fib-aux o 1 n))
+
+
+------------------ Feb 1 lecture*/
+((lambda () (error "Metacircular Interptete)))
+
+/*;; and and or*/
+
+(define (eval-and exp env)
+    (define and-loop exps)
+        (cond 
+    (and-loop (and-operands )))
+
+
